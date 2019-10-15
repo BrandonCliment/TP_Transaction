@@ -56,13 +56,17 @@ public class BankingDAO {
 				statement.setFloat( 1, amount * -1);
 				statement.setInt(2, fromID);
 				int numberUpdated = statement.executeUpdate();
-
+                                if (numberUpdated == 0){
+                                    throw new Exception("Aled " + fromID + " pas là");
+                                }
 				// On crédite le 2° client
 				statement.clearParameters();
 				statement.setFloat( 1, amount);
 				statement.setInt(2, toID);
 				numberUpdated = statement.executeUpdate();
-
+                                if (numberUpdated == 0){
+                                    throw new Exception("Aled " + toID + " pas là");
+                                }
 				// Tout s'est bien passé, on peut valider la transaction
 				myConnection.commit();
 			} catch (Exception ex) {
